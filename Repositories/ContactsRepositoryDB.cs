@@ -1,23 +1,25 @@
-﻿using CallCompanion.Interfaces;
+﻿using CallCompanion.Data;
+using CallCompanion.Interfaces;
 
 namespace CallCompanion.Repositories
 {
     public class ContactsRepositoryDB:IContactsRepository
     {
-
-        public ContactsRepositoryDB()
+        private readonly CallCompanionDbContext _context;
+        public ContactsRepositoryDB(CallCompanionDbContext context)
         {
-
+            _context = context;
         }
 
         public void AddContact(Contact contact)
         {
-            throw new NotImplementedException();
+            _context.Contacts.Add(contact);
+            _context.SaveChanges();
         }
 
         public IEnumerable<Contact> GetAllContacts()
         {
-            throw new NotImplementedException();
+            return _context.Contacts.ToList();
         }
 
         public Contact? GetContactById(int id)
